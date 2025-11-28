@@ -99,7 +99,7 @@
       top: 20px;             /* 위쪽에서 고정 위치 (1줄일 때도 위쪽에 가깝게) */
 
       font-family: 'DungGeunMo', 'Noto Sans KR', sans-serif; /* 픽셀 폰트 우선 적용 */
-      font-size: 24px;        /* 폰트 크기 (이미지 기준으로 더 크게) */
+      font-size: 28px;        /* 폰트 크기 (더 크게) */
       line-height: 1.1;       /* 줄 간격 (포켓몬 골드 스타일: 매우 좁게) */
       letter-spacing: 0px;    /* 자간 (포켓몬 골드 스타일: 기본값) */
       white-space: pre-line;  /* textarea의 엔터(줄바꿈)를 그대로 반영 */
@@ -125,7 +125,7 @@
   <!-- 위쪽: 문장 입력과 버튼 부분 -->
   <div class="control-panel">
     <p>포켓몬 2세대 스타일 자막 생성기입니다.</p>
-    <p>1줄 이상 적고, 줄 바꾸고 싶으면 엔터를 눌러주세요.</p>
+    <p>최대 2줄까지 입력 가능합니다. 줄 바꾸고 싶으면 엔터를 눌러주세요.</p>
     <textarea id="text-input">반가워요! 나는 포켓몬이야!</textarea>
     <br />
     <button id="update-btn">미리보기 업데이트</button>
@@ -152,8 +152,12 @@
 
     // [미리보기 업데이트] 버튼 클릭 시 실행
     updateBtn.addEventListener("click", () => {
-      // textarea에 적힌 내용을 그대로 포켓몬 창 안으로 옮김
-      textOutput.textContent = textInput.value;
+      // textarea에 적힌 내용을 가져와서 2줄까지만 표시
+      let text = textInput.value;
+      // 줄바꿈으로 분리하고 최대 2줄만 가져오기
+      const lines = text.split('\n');
+      const limitedText = lines.slice(0, 2).join('\n');
+      textOutput.textContent = limitedText;
     });
 
     // [PNG로 저장하기] 버튼 클릭 시 실행
