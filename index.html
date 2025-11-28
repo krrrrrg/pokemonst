@@ -96,7 +96,8 @@
       position: absolute;
       left: 30px;            /* 글자 시작 위치 30px */
       right: 40px;
-      top: 20px;             /* 위쪽에서 고정 위치 (1줄일 때도 위쪽에 가깝게) */
+      top: 50%;              /* 기본 중앙 정렬 */
+      transform: translateY(-50%); /* 수직 중앙 정렬 */
 
       font-family: 'DungGeunMo', 'Noto Sans KR', sans-serif; /* 픽셀 폰트 우선 적용 */
       font-size: 28px;        /* 폰트 크기 (더 크게) */
@@ -158,6 +159,31 @@
       const lines = text.split('\n');
       const limitedText = lines.slice(0, 2).join('\n');
       textOutput.textContent = limitedText;
+      
+      // 줄 수에 따라 위치 조정
+      const lineCount = limitedText.split('\n').filter(line => line.trim() !== '').length;
+      if (lineCount === 1) {
+        // 1줄일 때는 위쪽에 가깝게
+        textOutput.style.top = '20px';
+        textOutput.style.transform = 'translateY(0)';
+      } else {
+        // 2줄일 때는 중앙 정렬
+        textOutput.style.top = '50%';
+        textOutput.style.transform = 'translateY(-50%)';
+      }
+    });
+    
+    // 페이지 로드 시 초기 텍스트 위치 설정
+    window.addEventListener('load', () => {
+      const initialText = textOutput.textContent;
+      const lineCount = initialText.split('\n').filter(line => line.trim() !== '').length;
+      if (lineCount === 1) {
+        textOutput.style.top = '20px';
+        textOutput.style.transform = 'translateY(0)';
+      } else {
+        textOutput.style.top = '50%';
+        textOutput.style.transform = 'translateY(-50%)';
+      }
     });
 
     // [PNG로 저장하기] 버튼 클릭 시 실행
